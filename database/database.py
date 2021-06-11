@@ -36,6 +36,6 @@ class Database:
 		return self.fetch_all(query, id)
 
 	def fetch_single(self, table, id):
-		query = f"SELECT * FROM {table} WHERE id = ?"
+		query = f"SELECT * FROM {table} WHERE id = ? LIMIT 1"
 		self.cursor.execute(query, (id,))
 		return self.cursor.fetchone()
