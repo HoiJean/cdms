@@ -8,7 +8,7 @@ class DomainValidation:
         validated = None
         while not validated:
             user_input = input(message_name)
-            if not re.match(validation_type, user_input):
+            if not re.match(validation_type, user_input, re.IGNORECASE):
                 print(error_output)
             else:
                 return user_input

@@ -1,5 +1,6 @@
 from helpers.consoleoutput import ConsoleOutput
 from helpers.typevalidation import TypeValidation
+from screens.client import Client
 
 
 class Main:
@@ -32,4 +33,9 @@ class Main:
                 if not action_list[int(user_input)]:
                     print('Can\'t find this action')
                 else:
-                    print('executing')
+                    if int(user_input) == 0:
+                        Client.show()
+                    elif int(user_input) == 1:
+                        Client.create()
+                    elif int(user_input) == 2:
+                        Client.update()
