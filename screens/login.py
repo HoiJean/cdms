@@ -12,7 +12,7 @@ class Login:
         result = False
         while result is False:
 
-            username = DomainValidation.validate(DomainTypes.Username, 'Type your username', 'Username is incorrect')
+            username = DomainValidation.validate_regex(DomainTypes.Username, 'Type your username', 'Username is incorrect')
             password = DomainValidation.accept_all('Type your password')
             result = User.login(username, password)
             if result is False:

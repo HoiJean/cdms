@@ -1,15 +1,17 @@
 import re
 
+from helpers.consoleoutput import ConsoleOutput
+
 
 class DomainValidation:
 
     @staticmethod
-    def validate(validation_type, message_name, error_output):
+    def validate_regex(validation_type, message_name, error_output):
         validated = None
         while not validated:
             user_input = input(message_name)
             if not re.match(validation_type, user_input, re.IGNORECASE):
-                print(error_output)
+                ConsoleOutput.error(error_output)
             else:
                 return user_input
 
