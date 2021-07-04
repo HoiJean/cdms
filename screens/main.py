@@ -18,7 +18,8 @@ class Main:
 		if credentials.role == 1:
 			action_list += [
 				{'name': "Add advisor"},
-				{'name': "Update advisor"}
+				{'name': "Update advisor"},
+				{'name': "Delete client"},
 			]
 
 		user_input = ''
@@ -49,3 +50,6 @@ class Main:
 					elif int(user_input) == 2:
 						client_obj = Client()
 						client_obj.update()
+					elif int(user_input) == 5:
+						client_obj = Client()
+						client_obj.delete()
