@@ -3,16 +3,24 @@ from database import database
 
 class User:
 
-    @staticmethod
-    def login(username, password):
-        db = database.Database()
+	@staticmethod
+	def login(username, password):
+		db = database.Database()
 
-        cursor = db.cursor
-        cursor.execute("SELECT * FROM users WHERE username=? AND password=? LIMIT 1", (username, password))
-        result = cursor.fetchone()
+		cursor = db.cursor
+		cursor.execute("SELECT * FROM users WHERE username=? AND password=? LIMIT 1", (username, password))
+		result = cursor.fetchone()
 
-        db.connection.commit()
+		print("Result type")
+		print(result)
 
-        if result is None:
-            return False
-        return True
+		db.connection.commit()
+
+		user_result = {
+			"username": result[1],
+			"is_admin": result[3],
+		}
+
+		if result is None:
+			return False
+		return user_result
