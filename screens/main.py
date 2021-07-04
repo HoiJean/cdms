@@ -41,9 +41,11 @@ class Main:
 					print('Can\'t find this action')
 				else:
 					if int(user_input) == 0:
-						Client.show()
+						client_obj = Client()
+						client_obj.show()
 					elif int(user_input) == 1:
 						client_obj = Client()
 						client_obj.create()
 					elif int(user_input) == 2:
-						Client.update()
+						client_obj = Client()
+						client_obj.update()

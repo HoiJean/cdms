@@ -11,7 +11,10 @@ class Clientcommand:
 		pass
 
 	def get(self, **kwargs):
-		pass
+		return self.db_manager.select('clients', kwargs)
 
-	def update(self, **kwargs):
-		pass
+	def search(self, search):
+		return self.db_manager._execute("SELECT * FROM clients WHERE full_name LIKE ?", ('%' + search + '%',))
+
+	def update(self, criteria, data):
+		self.db_manager.update('clients', criteria, data)
