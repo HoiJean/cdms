@@ -20,7 +20,8 @@ class Main:
 		if credentials.role == 1:
 			action_list += [
 				{'name': "Add advisor"},
-				{'name': "Update advisor"}
+				{'name': "Update advisor"},
+				{'name': "Delete client"},
 			]
 
 		user_input = ''
@@ -52,3 +53,6 @@ class Main:
 					elif int(user_input) == 3:
 						login_screen = UpdateLoginScreen()
 						login_screen.show()
+					elif int(user_input) == 6:
+						client_obj = Client()
+						client_obj.delete()

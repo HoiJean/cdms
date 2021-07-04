@@ -8,7 +8,7 @@ class Clientcommand:
 		self.db_manager.add('clients', kwargs)
 
 	def remove(self, **kwargs):
-		pass
+		self.db_manager.delete('clients', kwargs)
 
 	def get(self, **kwargs):
 		return self.db_manager.select('clients', kwargs)
