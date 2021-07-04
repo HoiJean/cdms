@@ -12,9 +12,12 @@ class Login:
 		result = False
 
 		while result is False:
+			user_obj = User()
 			username = DomainValidation.validate(DomainTypes.Username, 'Type your username', 'Username is incorrect')
 			password = DomainValidation.accept_all('Type your password')
-			result = User.login(username, password)
+
+			result = user_obj.login(username, password)
+
 			if result is False:
 				print('Please check your credentials')
 			else:

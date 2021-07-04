@@ -15,7 +15,6 @@ class Main:
 			# {'name': 'Update user password', 'class': Client.index()},
 		]
 
-		# if user.role == system_admin
 		if credentials.role == 1:
 			action_list += [
 				{'name': "Add advisor"},
@@ -44,6 +43,7 @@ class Main:
 					if int(user_input) == 0:
 						Client.show()
 					elif int(user_input) == 1:
-						Client.create()
+						client_obj = Client()
+						client_obj.create()
 					elif int(user_input) == 2:
 						Client.update()
