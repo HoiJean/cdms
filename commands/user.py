@@ -1,5 +1,7 @@
+from constants import credentials
 from database import database
 from database import databasemanager
+import hashlib
 
 
 class User:
@@ -26,7 +28,8 @@ class User:
 		return user_result
 
 	def login(self, username, password):
-		cursor = self.db_manager.select('users', {"username" : username, "password" : password})
+		password = self.hash_password(password)
+		cursor = self.db_manager.select('users', {"username": username, "password": password})
 		result = cursor.fetchone()
 
 		user_result = {
@@ -36,4 +39,17 @@ class User:
 
 		if result is None:
 			return False
+
+		credentials.current_user = result
 		return user_result
+
+	def update_password(self, new_password):
+		current_user = credentials.current_user
+		new_password = self.hash_password(new_password)
+		criteria = {"id": current_user["id"]}
+		data = {"password": new_password}
+		cursor = self.db_manager.update('users', criteria, data)
+
+	def hash_password(self, text):
+		text = str(text).encode('utf-8')
+		return hashlib.md5(text).hexdigest()

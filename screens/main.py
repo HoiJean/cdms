@@ -2,6 +2,7 @@ from constants import credentials
 from helpers.consoleoutput import ConsoleOutput
 from helpers.typevalidation import TypeValidation
 from screens.client import Client
+from screens.update_login_screen import UpdateLoginScreen
 
 
 class Main:
@@ -12,6 +13,7 @@ class Main:
 			{'name': 'Open client'},
 			{'name': 'Register new client'},
 			{'name': 'Update client'},
+			{'name': 'Update login password'},
 			# {'name': 'Update user password', 'class': Client.index()},
 		]
 
@@ -37,19 +39,20 @@ class Main:
 				ConsoleOutput.error('Please select in range of the options...')
 			else:
 				# Code is found, todo: check if authorized to perform this action
+				client_obj = Client()
 
 				if not action_list[int(user_input)]:
 					print('Can\'t find this action')
 				else:
 					if int(user_input) == 0:
-						client_obj = Client()
 						client_obj.show()
 					elif int(user_input) == 1:
-						client_obj = Client()
 						client_obj.create()
 					elif int(user_input) == 2:
-						client_obj = Client()
 						client_obj.update()
-					elif int(user_input) == 5:
+					elif int(user_input) == 3:
+						login_screen = UpdateLoginScreen()
+						login_screen.show()
+					elif int(user_input) == 6:
 						client_obj = Client()
 						client_obj.delete()
