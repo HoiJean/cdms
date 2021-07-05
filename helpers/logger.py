@@ -18,6 +18,7 @@ class Logger:
 
         self.fieldnames = [
             self.encryption.encrypt('No'),
+            self.encryption.encrypt('Username'),
             self.encryption.encrypt('Date'),
             self.encryption.encrypt('Time'),
             self.encryption.encrypt('Description of activity'),
@@ -32,20 +33,22 @@ class Logger:
             self.writer.writeheader()
             file.close()
 
-    def write(self, description, additional_information, suspicious=False):
+    def write(self, username, description, additional_information, suspicious=False):
         self.open()
 
         current_date = datetime.now()
 
-        suspicious = 'No'
         if suspicious is True:
             suspicious = 'Yes'
+        else:
+            suspicious = 'No'
 
         self.writer.writerow(
             {
-                self.encryption.encrypt('No'): self.encryption.encrypt(self.count_size()),
-                self.encryption.encrypt('Date'): self.encryption.encrypt(current_date.strftime("%d-%m-%Y")),
-                self.encryption.encrypt('Time'): self.encryption.encrypt(datetime.now().strftime("%H:%M:%S")),
+                self.encryption.encrypt('No'): self.count_size(),
+                self.encryption.encrypt('Username'): self.encryption.encrypt(username),
+                self.encryption.encrypt('Date'): current_date.strftime("%d-%m-%Y"),
+                self.encryption.encrypt('Time'): datetime.now().strftime("%H:%M:%S"),
                 self.encryption.encrypt('Description of activity'): self.encryption.encrypt(description),
                 self.encryption.encrypt('Additional Information'): self.encryption.encrypt(additional_information),
                 self.encryption.encrypt('Suspicious'): self.encryption.encrypt(suspicious),
@@ -53,9 +56,16 @@ class Logger:
 
         self.close()
 
+    def read(self):
+        self.open()
+        data = list(self.reader)
+        self.close()
+
+        return data
+
     def open(self):
         self.file = open(self.filename, mode='r+')
-        self.reader = csv.reader(self.file)
+        self.reader = csv.DictReader(self.file)
         self.writer = csv.DictWriter(self.file, fieldnames=self.fieldnames)
 
     def close(self):

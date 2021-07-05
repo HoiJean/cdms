@@ -32,13 +32,13 @@ class User:
 		cursor = self.db_manager.select('users', {"username": username, "password": password})
 		result = cursor.fetchone()
 
+		if result is None:
+			return False
+
 		user_result = {
 			"username": result["username"],
 			"is_admin": result["is_admin"],
 		}
-
-		if result is None:
-			return False
 
 		credentials.current_user = result
 		return user_result
