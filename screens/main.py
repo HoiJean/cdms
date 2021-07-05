@@ -4,6 +4,7 @@ from helpers.typevalidation import TypeValidation
 from screens.backup_screen import BackupScreen
 from screens.client import Client
 from screens.update_login_screen import UpdateLoginScreen
+from screens.view_log_screen import ViewLogScreen
 
 
 class Main:
@@ -23,6 +24,7 @@ class Main:
 				{'name': "Add advisor"},
 				{'name': "Update advisor"},
 				{'name': "Delete client"},
+				{'name': 'Logs'},
 				{'name': "Backup the database"},
 			]
 
@@ -58,7 +60,10 @@ class Main:
 					elif int(user_input) == 6:
 						client_obj = Client()
 						client_obj.delete()
-					elif int(user_input) == 6:
+					elif int(user_input) == 7:
+						logs_obj = ViewLogScreen()
+						logs_obj.show()
+					elif int(user_input) == 8:
 						backup_screen = BackupScreen()
 						backup_screen.show()
 						user_input = 'q'
