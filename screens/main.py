@@ -1,6 +1,7 @@
 from constants import credentials
 from helpers.consoleoutput import ConsoleOutput
 from helpers.typevalidation import TypeValidation
+from screens.backup_screen import BackupScreen
 from screens.client import Client
 
 
@@ -20,6 +21,7 @@ class Main:
 				{'name': "Add advisor"},
 				{'name': "Update advisor"},
 				{'name': "Delete client"},
+				{'name': "Backup the database"},
 			]
 
 		user_input = ''
@@ -53,3 +55,7 @@ class Main:
 					elif int(user_input) == 5:
 						client_obj = Client()
 						client_obj.delete()
+					elif int(user_input) == 6:
+						backup_screen = BackupScreen()
+						backup_screen.show()
+						user_input = 'q'
