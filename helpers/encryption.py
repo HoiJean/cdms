@@ -1,3 +1,6 @@
+from helpers.typevalidation import TypeValidation
+
+
 class Encryption:
 
     alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -7,13 +10,15 @@ class Encryption:
         if key is not None:
             self.key = key
 
-    def encrypt(self, key, message):
+    def encrypt(self, message):
+        if TypeValidation.is_digit(str(message)):
+            return message
         message = message.upper()
         result = ""
 
         for letter in message:
             if letter in self.alpha:
-                letter_index = (self.alpha.find(letter) + key) % len(self.alpha)
+                letter_index = (self.alpha.find(letter) + self.key) % len(self.alpha)
 
                 result = result + self.alpha[letter_index]
             else:
@@ -21,13 +26,13 @@ class Encryption:
 
         return result
 
-    def decrypt(self, key, message):
+    def decrypt(self, message):
         message = message.upper()
         result = ""
 
         for letter in message:
             if letter in self.alpha:
-                letter_index = (self.alpha.find(letter) - key) % len(self.alpha)
+                letter_index = (self.alpha.find(letter) - self.key) % len(self.alpha)
 
                 result = result + self.alpha[letter_index]
             else:

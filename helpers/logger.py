@@ -2,6 +2,8 @@ import csv
 import os
 from datetime import date, datetime
 
+from helpers.encryption import Encryption
+
 
 class Logger:
     filename = 'log.csv'
@@ -9,8 +11,11 @@ class Logger:
     file = None
     writer = None
     reader = None
+    encryption = None
 
     def __init__(self):
+        self.encryption = Encryption()
+
         file_exists = os.path.isfile(self.filename)
         if file_exists is False:
             file = open(self.filename, mode='w')
@@ -29,12 +34,12 @@ class Logger:
 
         self.writer.writerow(
             {
-                'No': self.count_size(),
-                'Date': current_date.strftime("%d-%m-%Y"),
-                'Time': datetime.now().strftime("%H:%M:%S"),
-                'Description of activity': description,
-                'Additional Information': additional_information,
-                'Suspicious': suspicious,
+                'No': self.encryption.encrypt(self.count_size()),
+                'Date': self.encryption.encrypt(current_date.strftime("%d-%m-%Y")),
+                'Time': self.encryption.encrypt(datetime.now().strftime("%H:%M:%S")),
+                'Description of activity': self.encryption.encrypt(description),
+                'Additional Information': self.encryption.encrypt(additional_information),
+                'Suspicious': self.encryption.encrypt(suspicious),
             })
 
         self.close()
