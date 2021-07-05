@@ -1,6 +1,7 @@
 from constants import credentials
 from helpers.consoleoutput import ConsoleOutput
 from helpers.typevalidation import TypeValidation
+from screens.backup_screen import BackupScreen
 from screens.client import Client
 from screens.update_login_screen import UpdateLoginScreen
 from screens.view_log_screen import ViewLogScreen
@@ -24,6 +25,7 @@ class Main:
 				{'name': "Update advisor"},
 				{'name': "Delete client"},
 				{'name': 'Logs'},
+				{'name': "Backup the database"},
 			]
 
 		user_input = ''
@@ -61,3 +63,7 @@ class Main:
 					elif int(user_input) == 7:
 						logs_obj = ViewLogScreen()
 						logs_obj.show()
+					elif int(user_input) == 8:
+						backup_screen = BackupScreen()
+						backup_screen.show()
+						user_input = 'q'
