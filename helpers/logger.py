@@ -7,7 +7,7 @@ from helpers.encryption import Encryption
 
 class Logger:
     filename = 'log.csv'
-    fieldnames = ['No', 'Date', 'Time', 'Description of activity', 'Additional Information', 'Suspicious']
+    fieldnames = None
     file = None
     writer = None
     reader = None
@@ -15,6 +15,15 @@ class Logger:
 
     def __init__(self):
         self.encryption = Encryption()
+
+        self.fieldnames = [
+            self.encryption.encrypt('No'),
+            self.encryption.encrypt('Date'),
+            self.encryption.encrypt('Time'),
+            self.encryption.encrypt('Description of activity'),
+            self.encryption.encrypt('Additional Information'),
+            self.encryption.encrypt('Suspicious')
+        ]
 
         file_exists = os.path.isfile(self.filename)
         if file_exists is False:
@@ -34,12 +43,12 @@ class Logger:
 
         self.writer.writerow(
             {
-                'No': self.encryption.encrypt(self.count_size()),
-                'Date': self.encryption.encrypt(current_date.strftime("%d-%m-%Y")),
-                'Time': self.encryption.encrypt(datetime.now().strftime("%H:%M:%S")),
-                'Description of activity': self.encryption.encrypt(description),
-                'Additional Information': self.encryption.encrypt(additional_information),
-                'Suspicious': self.encryption.encrypt(suspicious),
+                self.encryption.encrypt('No'): self.encryption.encrypt(self.count_size()),
+                self.encryption.encrypt('Date'): self.encryption.encrypt(current_date.strftime("%d-%m-%Y")),
+                self.encryption.encrypt('Time'): self.encryption.encrypt(datetime.now().strftime("%H:%M:%S")),
+                self.encryption.encrypt('Description of activity'): self.encryption.encrypt(description),
+                self.encryption.encrypt('Additional Information'): self.encryption.encrypt(additional_information),
+                self.encryption.encrypt('Suspicious'): self.encryption.encrypt(suspicious),
             })
 
         self.close()
