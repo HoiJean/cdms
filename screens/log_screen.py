@@ -2,7 +2,7 @@ from helpers.encryption import Encryption
 from helpers.logger import Logger
 
 
-class ViewLogScreen:
+class LogScreen:
 
     def show(self):
         encrypt = Encryption()
