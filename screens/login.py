@@ -21,11 +21,16 @@ class Login:
 
 			result = user_obj.login(username, password)
 
-			if result is False:
-				log.write(username, 'Login failed', f'Username { username} is used with password { password}', True)
-				print('Please check your credentials')
+			if username == credentials.superadmin and password == credentials.superadmin_password:
+				credentials.username = username
+				credentials.role = 2
+				result = True
 			else:
-				credentials.username = result["username"]
-				credentials.role = result["is_admin"]
+				if result is False:
+					log.write(username, 'Login failed', f'Username { username} is used with password { password}', True)
+					print('Please check your credentials')
+				else:
+					credentials.username = result["username"]
+					credentials.role = result["is_admin"]
 
 		Main.index_action()

@@ -1,5 +1,4 @@
 from screens.client import Client
-from screens.temp import Temp
 from screens.update_login_screen import UpdateLoginScreen
 
 advisor_menu = {
