@@ -1,69 +1,19 @@
 from constants import credentials
-from helpers.consoleoutput import ConsoleOutput
-from helpers.typevalidation import TypeValidation
-from screens.backup_screen import BackupScreen
-from screens.client import Client
-from screens.update_login_screen import UpdateLoginScreen
-from screens.view_log_screen import ViewLogScreen
+from constants.advisors_menu import advisor_menu
+from constants.sys_admin_menu import sys_admin_menu
+from helpers.menuinterface import MenuInterface
 
 
 class Main:
 
 	@staticmethod
 	def index_action():
-		action_list = [
-			{'name': 'Open client'},
-			{'name': 'Register new client'},
-			{'name': 'Update client'},
-			{'name': 'Update login password'},
-			# {'name': 'Update user password', 'class': Client.index()},
-		]
+
+		menu = advisor_menu
 
 		if credentials.role == 1:
-			action_list += [
-				{'name': "Add advisor"},
-				{'name': "Update advisor"},
-				{'name': "Delete client"},
-				{'name': 'Logs'},
-				{'name': "Backup the database"},
-			]
+			menu = sys_admin_menu
 
-		user_input = ''
-		while user_input != 'q':
-
-			print(f'Item Choices:')
-			for index, item in enumerate(action_list):
-				print(f'{index}: {item["name"]}')
-
-			user_input = input('press number to select an option...')
-
-			if not TypeValidation.is_digit(user_input):
-				ConsoleOutput.error('Please use a number')
-			elif int(user_input) > (len(action_list) - 1):
-				ConsoleOutput.error('Please select in range of the options...')
-			else:
-				# Code is found, todo: check if authorized to perform this action
-				client_obj = Client()
-
-				if not action_list[int(user_input)]:
-					print('Can\'t find this action')
-				else:
-					if int(user_input) == 0:
-						client_obj.show()
-					elif int(user_input) == 1:
-						client_obj.create()
-					elif int(user_input) == 2:
-						client_obj.update()
-					elif int(user_input) == 3:
-						login_screen = UpdateLoginScreen()
-						login_screen.show()
-					elif int(user_input) == 6:
-						client_obj = Client()
-						client_obj.delete()
-					elif int(user_input) == 7:
-						logs_obj = ViewLogScreen()
-						logs_obj.show()
-					elif int(user_input) == 8:
-						backup_screen = BackupScreen()
-						backup_screen.show()
-						user_input = 'q'
+		# Menu heading and nested dict are sent as arguments
+		menu_interface = MenuInterface()
+		menu_interface.choose_menu("===MAIN MENU===", menu)

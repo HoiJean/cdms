@@ -201,4 +201,4 @@ class Client:
             if selected_client is None:
                 ConsoleOutput.error("Client not found")
             else:
-                self.command.remove(id=selected_client['id']);
+                self.command.remove(id=selected_client['id'])
