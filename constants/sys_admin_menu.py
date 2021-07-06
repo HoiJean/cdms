@@ -33,23 +33,23 @@ sys_admin_menu = {
         "label": "Make system backup",
         "func": BackupScreen().show
     },
-    7: {
+    8: {
         "label": "System logs",
         "func": LogScreen().show
     },
-    8: {
+    9: {
         "label": "Add client",
         "func": Client().create
     },
-    9: {
+    10: {
         "label": "Modify client",
         "func": Client().update
     },
-    10: {
+    11: {
         "label": "Remove client",
         "func": Temp().not_implemented
     },
-    11: {
+    12: {
         "label": "Search client",
         "func": Client().show
     },
