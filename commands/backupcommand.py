@@ -1,3 +1,4 @@
+import os
 import zipfile
 import time
 
@@ -15,5 +16,9 @@ class BackupCommand:
 
 		zf = zipfile.ZipFile(filename, mode='w', compression=zipfile.ZIP_DEFLATED)
 		zf.writestr('dump.sql', data)
+
+		if os.path.isfile('log.csv'):
+			zf.write('log.csv')
+
 		zf.close()
 		print("Backup has been created")
