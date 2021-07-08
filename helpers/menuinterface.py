@@ -52,10 +52,9 @@ class MenuInterface:
         self.notify_user(heading)
 
         # Prints menu by iterating through the dict
-        for i in menu:
-            self.notify_user(f"{i}. {menu[i]['label']}")
-
         while True:
+            for i in menu:
+                self.notify_user(f"{i}. {menu[i]['label']}")
             try:
                 choice = int(self.ask_user("Choose a menu option").strip())
                 # .strip() removes starting and ending spaces
@@ -63,7 +62,7 @@ class MenuInterface:
                 if choice in range(1, len(menu) + 1):
                     # Runs the function of the chosen menu option
                     menu[choice]["func"]()
-                    return False
+                    # return False
 
                 else:
                     self.notify_user("The number you input isn't among the menu options.")
