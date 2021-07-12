@@ -1,7 +1,9 @@
 from commands.clientcommand import Clientcommand
+from constants import credentials
 from constants.domaintypes import DomainTypes
 from helpers.consoleoutput import ConsoleOutput
 from helpers.domainvalidation import DomainValidation
+from helpers.logger import Logger
 from helpers.typevalidation import TypeValidation
 
 
@@ -9,6 +11,7 @@ class Client:
 
     def __init__(self):
         self.command = Clientcommand()
+        self.logger = Logger()
 
     def show(self):
         full_name = DomainValidation.validate(DomainTypes.full_name, 'Type the full name', 'full name can only contain letters, dashes and apostrophes')
@@ -99,6 +102,9 @@ class Client:
             city=city
         )
 
+        ConsoleOutput.success('Client created.')
+        self.logger.write(credentials.username, 'New client is created', 'Full name: ' + full_name, False)
+
         return True
 
     def update(self):
@@ -115,7 +121,7 @@ class Client:
                 full_name = DomainValidation.validateOptionalFields(DomainTypes.full_name, 'Type the full name', 'full name can only contain letters, dashes and apostrophes')
                 street_name = DomainValidation.validateOptionalFields(DomainTypes.street_address, 'Type the street address', 'Street cannot contain space at the begin '
                                         'or end and cannot contain a number')
-                house_number = DomainValidation.validateOptionalFields(DomainTypes.house_number, 'Type the house number', 'House number can contain numbers with optional added letter')
+                house_number = DomainValidation.validateOptionalFields(DomainTypes.house_number, 'Type the house number', 'House number can contain numbers with optional added letter', min_length=1)
                 zip_code = DomainValidation.validateOptionalFields(DomainTypes.zip_code, 'Type the zip code', 'Zip code must be 4 numbers and 2 letters without a space')
                 email = DomainValidation.validateOptionalFields(DomainTypes.email, 'Type the email', 'mail is incorrect')
                 phone_number = DomainValidation.validateOptionalFields(DomainTypes.phone_number, 'Type the phone number', 'Phone number is incorrect. Note: "+31 6" is already filled in')
@@ -193,6 +199,8 @@ class Client:
                 }
 
                 self.command.update(criteria, data)
+                ConsoleOutput.success('Client updated.')
+                self.logger.write(credentials.username, 'Client is updated', 'Full name: ' + full_name, False)
 
     def delete(self):
         client_id = input('Which client ID do you want to delete?')
@@ -205,4 +213,7 @@ class Client:
             else:
                 self.command.remove(id=selected_client['id'])
                 ConsoleOutput.success('Client has been deleted')
-
+                if credentials.role == 1:
+                    self.logger.write(credentials.username, 'Client is removed', 'Full name: ' + selected_client['full_name'], False)
+                else:
+                    self.logger.write(credentials.username, 'Client is removed', 'Full name: ' + selected_client['full_name'], True)

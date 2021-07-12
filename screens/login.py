@@ -32,5 +32,6 @@ class Login:
 				else:
 					credentials.username = result["username"]
 					credentials.role = result["is_admin"]
+					log.write(username, 'Logged in', '', False)
 
 		Main.index_action()

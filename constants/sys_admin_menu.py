@@ -48,7 +48,7 @@ sys_admin_menu = {
     },
     11: {
         "label": "Remove client",
-        "func": Temp().not_implemented
+        "func": Client().delete
     },
     12: {
         "label": "Search client",
