@@ -20,11 +20,11 @@ sys_admin_menu = {
     },
     4: {
         "label": "Modify advisor",
-        "func": Temp().not_implemented
+        "func": Advisor().update
     },
     5: {
         "label": "Delete advisor",
-        "func": Temp().not_implemented
+        "func": Advisor().delete
     },
     6: {
         "label": "Reset advisor password",

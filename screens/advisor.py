@@ -57,10 +57,39 @@ class Advisor:
 
         ConsoleOutput.success('Advisor created!')
 
-    pass
-
     def update(self):
-        pass
+        user_id = input('Which user ID do you want to edit?')
+        if not TypeValidation.is_digit(user_id):
+            ConsoleOutput.error('Please use a number')
+        else:
+            selected_user = self.command.get(id=user_id).fetchone()
+            if selected_user is None:
+                ConsoleOutput.error("Advisor not found")
+            elif selected_user is not None and selected_user['is_admin'] == 1:
+                ConsoleOutput.error('User is system admin, you are not authorized to do that')
+            else:
+                username = DomainValidation.validateOptionalFields(DomainTypes.full_name, 'Type the username', 'Username can only contain letters, dashes, underscores, apostrophes, '
+                                                 'periods')
+
+                if not username:
+                    username = selected_user['username']
+
+                criteria = {'id': selected_user['id']}
+                data = {
+                    'username': username,
+                }
+
+                self.command.update(criteria, data)
+
+                ConsoleOutput.success('Advisor has been updated.')
 
     def delete(self):
-        pass
+        user_id = input('Which user ID do you want to delete?')
+        if not TypeValidation.is_digit(user_id):
+            ConsoleOutput.error('Please use a number')
+        else:
+            selected_user = self.command.get(id=user_id).fetchone()
+            if selected_user is None:
+                ConsoleOutput.error("Advisor not found")
+            elif selected_user is not None and selected_user['is_admin'] == 1:
+                ConsoleOutput.error('User is system admin, you are not authorized to do that')
