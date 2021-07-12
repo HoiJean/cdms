@@ -53,6 +53,7 @@ class User:
 		data = {"password": new_password}
 		cursor = self.db_manager.update('users', criteria, data)
 
-	def hash_password(self, text):
+	@staticmethod
+	def hash_password(text):
 		text = str(text).encode('utf-8')
 		return hashlib.md5(text).hexdigest()

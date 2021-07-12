@@ -1,6 +1,7 @@
 from commands.advisorcommand import Advisorcommand
 from commands.clientcommand import Clientcommand
 from commands.passwordcommand import Passwordcommand
+from commands.user import User
 from constants import credentials
 from constants.domaintypes import DomainTypes
 from helpers.consoleoutput import ConsoleOutput
@@ -95,9 +96,18 @@ class Advisor:
 				data = {}
 				criteria = {'id': selected_user['id']}
 				if update_type == 'password':
-					password_reset_screen = UpdateLoginScreen()
-					password_reset_screen.show(selected_user)
-					print("Updating password")
+					# password_reset_screen = UpdateLoginScreen()
+					# password_reset_screen.show(selected_user)
+					raw_password = self.generate_password(8)
+					encrypted_password = User.hash_password(raw_password)
+					data = {
+						'password': encrypted_password
+					}
+					self.command.update(criteria, data)
+
+					print("Updated password")
+					print("Temporary password: " + raw_password)
+					print()
 				else:
 					username = DomainValidation.validateOptionalFields(DomainTypes.full_name, 'Type the username',
 																	   'Username can only contain letters, dashes, underscores, apostrophes, '
@@ -139,3 +149,12 @@ class Advisor:
 				else:
 					self.logger.write(credentials.username, 'New advisor is removed',
 									  'Username: ' + selected_user['username'], True)
+
+	def generate_password(self, length):
+		if not isinstance(length, int) or length < 8:
+			raise ValueError("temp password must have positive length")
+
+		chars = "234679ADEFGHJKLMNPRTUWabdefghijkmnpqrstuwy"
+		from os import urandom
+
+		return "".join(chars[c % len(chars)] for c in urandom(length))
