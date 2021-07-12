@@ -5,8 +5,9 @@ from helpers.typevalidation import TypeValidation
 
 class UpdateLoginScreen:
 
-	def show(self):
+	def show(self, user_entity=None):
 		valid = False
+		user = User()
 
 		while not valid:
 			new_password = input('Enter a new password: ')
@@ -17,8 +18,7 @@ class UpdateLoginScreen:
 				if password_check["password_ok"]:
 					valid = True
 					print("Updating login...")
-					user = User()
-					user.update_password(new_password)
+					user.update_password(new_password, user_entity)
 					ConsoleOutput.success("Updated your password")
 				else:
 					print("Password must be atleast 8 character, must have a combination of at least one lowercase letter, one uppercase letter, one digit, and one special character")

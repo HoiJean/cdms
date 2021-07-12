@@ -43,13 +43,17 @@ class User:
 		credentials.current_user = result
 		return user_result
 
-	def update_password(self, new_password):
+	def update_password(self, new_password, user=None):
 		current_user = credentials.current_user
+		if user is not None:
+			current_user = user
+
 		new_password = self.hash_password(new_password)
 		criteria = {"id": current_user["id"]}
 		data = {"password": new_password}
 		cursor = self.db_manager.update('users', criteria, data)
 
-	def hash_password(self, text):
+	@staticmethod
+	def hash_password(text):
 		text = str(text).encode('utf-8')
 		return hashlib.md5(text).hexdigest()

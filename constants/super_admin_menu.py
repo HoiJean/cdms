@@ -1,3 +1,4 @@
+from screens.advisor import Advisor
 from screens.backup_screen import BackupScreen
 from screens.client import Client
 from screens.log_screen import LogScreen
@@ -17,19 +18,19 @@ super_admin_menu = {
 	},
 	3: {
 		"label": "Add advisor",
-		"func": Temp().not_implemented
+		"func": Advisor().create
 	},
 	4: {
 		"label": "Modify advisor",
-		"func": Temp().not_implemented
+		"func": Advisor().update
 	},
 	5: {
 		"label": "Delete advisor",
-		"func": Temp().not_implemented
+		"func": Advisor().delete
 	},
 	6: {
 		"label": "Reset advisor password",
-		"func": Temp().not_implemented
+		"func": Advisor().update_password
 	},
 	7: {
 		"label": "Make system backup",
@@ -49,7 +50,7 @@ super_admin_menu = {
 	},
 	11: {
 		"label": "Remove client",
-		"func": Temp().not_implemented
+		"func": Client.delete
 	},
 	12: {
 		"label": "Search client",
@@ -57,6 +58,6 @@ super_admin_menu = {
 	},
 	13: {
 		"label": "Add a new Admin",
-		"func": Temp().not_implemented
+		"func": Advisor().create_admin
 	},
 }
