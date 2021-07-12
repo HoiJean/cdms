@@ -202,3 +202,5 @@ class Client:
                 ConsoleOutput.error("Client not found")
             else:
                 self.command.remove(id=selected_client['id'])
+                ConsoleOutput.success('Client has been deleted')
+

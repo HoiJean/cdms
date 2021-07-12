@@ -93,3 +93,6 @@ class Advisor:
                 ConsoleOutput.error("Advisor not found")
             elif selected_user is not None and selected_user['is_admin'] == 1:
                 ConsoleOutput.error('User is system admin, you are not authorized to do that')
+            else:
+                self.command.remove(id=selected_user['id'])
+                ConsoleOutput.success('Advisor has been deleted')
