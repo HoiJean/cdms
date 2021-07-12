@@ -12,7 +12,7 @@ sys_admin_menu = {
     },
     2: {
         "label": "List of users",
-        "func": Temp().not_implemented
+        "func": Advisor().show
     },
     3: {
         "label": "Add advisor",

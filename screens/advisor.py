@@ -14,7 +14,18 @@ class Advisor:
         self.passwordCommand = Passwordcommand()
 
     def show(self):
-        pass
+        result = self.command.get()
+        clients = result.fetchall()
+
+        for client in clients:
+            ConsoleOutput.success("------------------------")
+            print("User ID: " + str(client['id']))
+            print("Username: " + client['username'])
+            if client['is_admin'] == 1:
+                print("Role: system-admin")
+            else:
+                print("Role: advisor")
+            ConsoleOutput.success("------------------------")
 
     def create(self):
 
