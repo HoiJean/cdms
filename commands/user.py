@@ -43,8 +43,11 @@ class User:
 		credentials.current_user = result
 		return user_result
 
-	def update_password(self, new_password):
+	def update_password(self, new_password, user=None):
 		current_user = credentials.current_user
+		if user is not None:
+			current_user = user
+
 		new_password = self.hash_password(new_password)
 		criteria = {"id": current_user["id"]}
 		data = {"password": new_password}

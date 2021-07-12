@@ -1,3 +1,4 @@
+from screens.advisor import Advisor
 from screens.backup_screen import BackupScreen
 from screens.client import Client
 from screens.log_screen import LogScreen
@@ -29,7 +30,7 @@ super_admin_menu = {
 	},
 	6: {
 		"label": "Reset advisor password",
-		"func": Temp().not_implemented
+		"func": Advisor().update_password
 	},
 	7: {
 		"label": "Make system backup",

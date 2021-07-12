@@ -28,7 +28,7 @@ sys_admin_menu = {
     },
     6: {
         "label": "Reset advisor password",
-        "func": Temp().not_implemented
+        "func": Advisor().update_password
     },
     7: {
         "label": "Make system backup",
