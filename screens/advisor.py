@@ -32,7 +32,7 @@ class Advisor:
 				print("Role: advisor")
 			ConsoleOutput.success("------------------------")
 
-	def create(self):
+	def create(self, is_admin=0):
 
 		username_validated = False
 		while not username_validated:
@@ -68,13 +68,18 @@ class Advisor:
 		self.command.create(
 			username=username,
 			password=self.passwordCommand.hash_password(password_first),
-			is_admin=0
+			is_admin=is_admin
 		)
-		ConsoleOutput.success('Advisor created!')
+
 		if credentials.role == 1:
+			ConsoleOutput.success('Admin created!')
 			self.logger.write(credentials.username, 'New advisor is created', 'Username: ' + username, False)
 		else:
+			ConsoleOutput.success('Advisor created!')
 			self.logger.write(credentials.username, 'New advisor is created', 'Username: ' + username, True)
+
+	def create_admin(self):
+		self.create(1)
 
 	def update(self, update_type='username'):
 		user_id = input('Which user ID do you want to edit?')

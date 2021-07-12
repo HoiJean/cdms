@@ -58,6 +58,6 @@ super_admin_menu = {
 	},
 	13: {
 		"label": "Add a new Admin",
-		"func": Temp().not_implemented
+		"func": Advisor().create_admin
 	},
 }
