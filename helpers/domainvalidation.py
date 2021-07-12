@@ -24,12 +24,13 @@ class DomainValidation:
 	@staticmethod
 	def validateOptionalFields(validation_type, message_name, error_output, min_length=3, max_length=100):
 		validated = False
-		user_input = input(message_name)
-
-		if len(user_input) < 1:
-			return False
 
 		while not validated:
+
+			user_input = input(message_name)
+
+			if len(user_input) < 1:
+				return False
 
 			if not re.match(validation_type, user_input, re.IGNORECASE):
 				print(error_output)
