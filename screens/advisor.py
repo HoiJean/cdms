@@ -1,9 +1,11 @@
 from commands.advisorcommand import Advisorcommand
 from commands.clientcommand import Clientcommand
 from commands.passwordcommand import Passwordcommand
+from constants import credentials
 from constants.domaintypes import DomainTypes
 from helpers.consoleoutput import ConsoleOutput
 from helpers.domainvalidation import DomainValidation
+from helpers.logger import Logger
 from helpers.typevalidation import TypeValidation
 
 
@@ -12,6 +14,7 @@ class Advisor:
     def __init__(self):
         self.command = Advisorcommand()
         self.passwordCommand = Passwordcommand()
+        self.logger = Logger()
 
     def show(self):
         result = self.command.get()
@@ -65,8 +68,11 @@ class Advisor:
             password=self.passwordCommand.hash_password(password_first),
             is_admin=0
         )
-
         ConsoleOutput.success('Advisor created!')
+        if credentials.role == 1:
+            self.logger.write(credentials.username, 'New advisor is created', 'Username: ' + username, False)
+        else:
+            self.logger.write(credentials.username, 'New advisor is created', 'Username: ' + username, True)
 
     def update(self):
         user_id = input('Which user ID do you want to edit?')
@@ -93,6 +99,10 @@ class Advisor:
                 self.command.update(criteria, data)
 
                 ConsoleOutput.success('Advisor has been updated.')
+                if credentials.role == 1:
+                    self.logger.write(credentials.username, 'Advisor is updated', 'Username: ' + username, False)
+                else:
+                    self.logger.write(credentials.username, 'Advisor is updated', 'Username: ' + username, True)
 
     def delete(self):
         user_id = input('Which user ID do you want to delete?')
@@ -107,3 +117,7 @@ class Advisor:
             else:
                 self.command.remove(id=selected_user['id'])
                 ConsoleOutput.success('Advisor has been deleted')
+                if credentials.role == 1:
+                    self.logger.write(credentials.username, 'Advisor is removed', 'Username: ' + selected_user['username'], False)
+                else:
+                    self.logger.write(credentials.username, 'New advisor is removed', 'Username: ' + selected_user['username'], True)
