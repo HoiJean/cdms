@@ -18,15 +18,15 @@ super_admin_menu = {
 	},
 	3: {
 		"label": "Add advisor",
-		"func": Temp().not_implemented
+		"func": Advisor().create
 	},
 	4: {
 		"label": "Modify advisor",
-		"func": Temp().not_implemented
+		"func": Advisor().update
 	},
 	5: {
 		"label": "Delete advisor",
-		"func": Temp().not_implemented
+		"func": Advisor().delete
 	},
 	6: {
 		"label": "Reset advisor password",
@@ -50,7 +50,7 @@ super_admin_menu = {
 	},
 	11: {
 		"label": "Remove client",
-		"func": Temp().not_implemented
+		"func": Client.delete
 	},
 	12: {
 		"label": "Search client",
