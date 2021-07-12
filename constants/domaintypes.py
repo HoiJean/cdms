@@ -1,9 +1,9 @@
 class DomainTypes:
     # User types
-    Username = "^[a-z ,.'-]+$"
+    Username = "^[a-zA-Z][a-zA-Z0-9.'-_]+$"
 
     # Client types
-    full_name = "^[a-z ,.'-]+$"
+    full_name = "^[a-z '-]+$"
     street_address = "^[-a-zA-Z0-9-()]+(\s+[-a-zA-Z-()]+)*$"
     house_number = "([0-9a-])\w+"
     zip_code = "^([0-9]{4}[a-z]{2})$"
