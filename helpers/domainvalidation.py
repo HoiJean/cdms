@@ -14,9 +14,9 @@ class DomainValidation:
 				print(error_output)
 			else:
 				if len(user_input) < min_length:
-					print("Too short")
+					print(f"Input too low, must be minimum {min_length} characters")
 				elif len(user_input) > max_length:
-					print("Too long")
+					print(f"Input too big, must be minimum {max_length} characters")
 				else:
 					validated = True
 		return user_input

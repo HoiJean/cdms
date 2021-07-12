@@ -1,6 +1,6 @@
 class DomainTypes:
     # User types
-    Username = "^[a-z ,.'-]+$"
+    Username = "^[a-zA-Z][a-zA-Z0-9.'-_]+$"
 
     # Client types
     full_name = "^[a-z ,.'-]+$"

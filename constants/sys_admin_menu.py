@@ -1,3 +1,4 @@
+from screens.advisor import Advisor
 from screens.backup_screen import BackupScreen
 from screens.client import Client
 from screens.log_screen import LogScreen
@@ -15,7 +16,7 @@ sys_admin_menu = {
     },
     3: {
         "label": "Add advisor",
-        "func": Temp().not_implemented
+        "func": Advisor().create
     },
     4: {
         "label": "Modify advisor",
