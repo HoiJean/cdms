@@ -1,5 +1,5 @@
 # Client Data Management System
-A complex system to manage clients information using python via command line and worlds most secure techniques used in WW2.
+A complex system to manage clients information using python via command line with worlds most secure techniques used in WW2.
 
 # Guide
 Every user has it's own role defined by is_admin in the database. For every role another menu array is being loaded. You can login with the credentials discussed in the section login information.  
