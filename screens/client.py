@@ -43,13 +43,13 @@ class Client:
         phone_number = ""
         city = ""
         while not submitted:
-            full_name = DomainValidation.validate(DomainTypes.full_name, 'Type the full name', 'full name can only contain letters, dashes and apostrophes')
-            street_name = DomainValidation.validate(DomainTypes.street_address, 'Type the street address', 'Street cannot contain space at the begin '
+            full_name = DomainValidation.validate(DomainTypes.full_name, 'Type the full name ', 'full name can only contain letters, dashes and apostrophes')
+            street_name = DomainValidation.validate(DomainTypes.street_address, 'Type the street address ', 'Street cannot contain space at the begin '
                                         'or end and cannot contain a number')
-            house_number = DomainValidation.validate(DomainTypes.house_number, 'Type the house number', 'House number can contain numbers with optional added letter', min_length=1)
-            zip_code = DomainValidation.validate(DomainTypes.zip_code, 'Type the zip code', 'Zip code must be 4 numbers and 2 letters without a space')
-            email = DomainValidation.validate(DomainTypes.email, 'Type the email', 'mail is incorrect')
-            phone_number = DomainValidation.validate(DomainTypes.phone_number, 'Type the phone number', 'Phone number is incorrect. Note: "+31 6" is already filled in')
+            house_number = DomainValidation.validate(DomainTypes.house_number, 'Type the house number ', 'House number can contain numbers with optional added letter', min_length=1)
+            zip_code = DomainValidation.validate(DomainTypes.zip_code, 'Type the zip code ', 'Zip code must be 4 numbers and 2 letters without a space')
+            email = DomainValidation.validate(DomainTypes.email, 'Type the email ', 'mail is incorrect')
+            phone_number = DomainValidation.validate(DomainTypes.phone_number, 'Type the phone number ', 'Phone number is incorrect. Note: "+31 6" is already filled in')
 
             city_validated = None
             while not city_validated:
@@ -123,13 +123,13 @@ class Client:
                 ConsoleOutput.error("Client not found")
             else:
 
-                full_name = DomainValidation.validateOptionalFields(DomainTypes.full_name, 'Type the full name', 'full name can only contain letters, dashes and apostrophes')
-                street_name = DomainValidation.validateOptionalFields(DomainTypes.street_address, 'Type the street address', 'Street cannot contain space at the begin '
+                full_name = DomainValidation.validateOptionalFields(DomainTypes.full_name, 'Type the full name ', 'full name can only contain letters, dashes and apostrophes')
+                street_name = DomainValidation.validateOptionalFields(DomainTypes.street_address, 'Type the street address ', 'Street cannot contain space at the begin '
                                         'or end and cannot contain a number')
-                house_number = DomainValidation.validateOptionalFields(DomainTypes.house_number, 'Type the house number', 'House number can contain numbers with optional added letter', min_length=1)
-                zip_code = DomainValidation.validateOptionalFields(DomainTypes.zip_code, 'Type the zip code', 'Zip code must be 4 numbers and 2 letters without a space')
-                email = DomainValidation.validateOptionalFields(DomainTypes.email, 'Type the email', 'mail is incorrect')
-                phone_number = DomainValidation.validateOptionalFields(DomainTypes.phone_number, 'Type the phone number', 'Phone number is incorrect. Note: "+31 6" is already filled in')
+                house_number = DomainValidation.validateOptionalFields(DomainTypes.house_number, 'Type the house number ', 'House number can contain numbers with optional added letter', min_length=1)
+                zip_code = DomainValidation.validateOptionalFields(DomainTypes.zip_code, 'Type the zip code ', 'Zip code must be 4 numbers and 2 letters without a space')
+                email = DomainValidation.validateOptionalFields(DomainTypes.email, 'Type the email ', 'mail is incorrect')
+                phone_number = DomainValidation.validateOptionalFields(DomainTypes.phone_number, 'Type the phone number ', 'Phone number is incorrect. Note: "+31 6" is already filled in')
                 city = ''
                 city_validated = None
                 while not city_validated:

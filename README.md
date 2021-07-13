@@ -7,6 +7,12 @@ A complex system to manage clients information using python via command line wit
 - Mac/Windows/Linux
 - Python 3.8+
 
+# How to run the application.
+- Go inside the root project.
+Run the command:
+```shell
+$ python3 main.py
+```
 # Guide
 Every user has it's own role defined by **is_admin** in the database. For every role a different menu array is being loaded. You can login with the credentials discussed in the section login information.  
 When the user login an menu will show up. The menu shows an number with an item. For example: '1. Create user'. The user can type the ID into the terminal and the menu will open.  

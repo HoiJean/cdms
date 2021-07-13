@@ -47,7 +47,7 @@ class Advisor:
         username = ''
         while not username_validated:
 
-            username = DomainValidation.validate(DomainTypes.Username, 'Type the username',
+            username = DomainValidation.validate(DomainTypes.Username, 'Type the username ',
                                                  'Username can only contain letters, dashes, underscores, apostrophes, '
                                                  'periods',
                                                  min_length=5, max_length=20)
@@ -59,7 +59,7 @@ class Advisor:
             else:
                 username_validated = True
 
-        full_name = DomainValidation.validate(DomainTypes.full_name, 'Type the full name',
+        full_name = DomainValidation.validate(DomainTypes.full_name, 'Type the full name ',
                                             'full name can only contain letters, dashes and apostrophes',
                                              min_length=5, max_length=20)
 
@@ -67,8 +67,8 @@ class Advisor:
         password_first = ''
 
         while not valid_password:
-            password_first = DomainValidation.validate(DomainTypes.password, 'Type your password', 'Password characters invalid')
-            password_second = DomainValidation.validate(DomainTypes.password, 'Type your password', 'Password characters invalid')
+            password_first = DomainValidation.validate(DomainTypes.password, 'Type your password ', 'Password characters invalid')
+            password_second = DomainValidation.validate(DomainTypes.password, 'Type your password ', 'Password characters invalid')
             password_check = TypeValidation.is_strong_password(password_first)
 
             if password_first != password_second:
@@ -92,16 +92,16 @@ class Advisor:
 
         if credentials.role > 0:
             ConsoleOutput.success('User created!')
-            self.logger.write(credentials.username, 'New advisor is created', 'Username: ' + username, False)
+            self.logger.write(credentials.username, 'New advisor is created ', 'Username: ' + username, False)
         else:
             ConsoleOutput.success('Advisor created!')
-            self.logger.write(credentials.username, 'New advisor is created', 'Username: ' + username, True)
+            self.logger.write(credentials.username, 'New advisor is created ', 'Username: ' + username, True)
 
     def create_admin(self):
         self.create(1)
 
     def update(self, update_type='username'):
-        user_id = input('Which user ID do you want to edit?')
+        user_id = input('Which user ID do you want to edit? ')
         if not TypeValidation.is_digit(user_id):
             ConsoleOutput.error('Please use a number')
         else:
@@ -128,10 +128,10 @@ class Advisor:
                     print()
                 else:
                     crypter = encryption.Encryption()
-                    username = DomainValidation.validateOptionalFields(DomainTypes.Username, 'Type the username',
+                    username = DomainValidation.validateOptionalFields(DomainTypes.Username, 'Type the username ',
                                                                        'Username can only contain letters, dashes, underscores, apostrophes, '
                                                                        'periods')
-                    full_name = DomainValidation.validateOptionalFields(DomainTypes.full_name, 'Type the full name',
+                    full_name = DomainValidation.validateOptionalFields(DomainTypes.full_name, 'Type the full name ',
                                                           'full name can only contain letters, dashes and apostrophes',
                                                           min_length=5, max_length=20)
                     if not username:
@@ -147,9 +147,9 @@ class Advisor:
                     }
 
                     if credentials.role > 0:
-                        self.logger.write(credentials.username, 'Advisor is updated', 'Username: ' + username, False)
+                        self.logger.write(credentials.username, 'Advisor is updated ', 'Username: ' + username, False)
                     else:
-                        self.logger.write(credentials.username, 'Advisor is updated', 'Username: ' + username, True)
+                        self.logger.write(credentials.username, 'Advisor is updated ', 'Username: ' + username, True)
 
                     self.command.update(criteria, data)
                     ConsoleOutput.success('Advisor has been updated.')
