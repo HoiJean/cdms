@@ -1,3 +1,5 @@
+from datetime import date
+
 from commands.advisorcommand import Advisorcommand
 from commands.clientcommand import Clientcommand
 from commands.passwordcommand import Passwordcommand
@@ -27,6 +29,13 @@ class Advisor:
 			ConsoleOutput.success("------------------------")
 			print("User ID: " + str(client['id']))
 			print("Username: " + client['username'])
+
+			if client['full_name'] is not None:
+				print("Fullname: " + client['full_name'])
+
+			if client['registration_date'] is not None:
+				print("Registration: " + client['registration_date'])
+
 			if client['is_admin'] == 1:
 				print("Role: system-admin")
 			else:
@@ -36,6 +45,7 @@ class Advisor:
 	def create(self, is_admin=0):
 
 		username_validated = False
+		username = ''
 		while not username_validated:
 
 			username = DomainValidation.validate(DomainTypes.Username, 'Type the username',
@@ -49,6 +59,10 @@ class Advisor:
 				ConsoleOutput.error('Username already exists...')
 			else:
 				username_validated = True
+
+		full_name = DomainValidation.validate(DomainTypes.full_name, 'Type the full name',
+											'full name can only contain letters, dashes and apostrophes',
+											 min_length=5, max_length=20)
 
 		valid_password = False
 		password_first = ''
@@ -68,6 +82,8 @@ class Advisor:
 
 		self.command.create(
 			username=username,
+			full_name=full_name,
+			registration_date=date.today(),
 			password=self.passwordCommand.hash_password(password_first),
 			is_admin=is_admin
 		)
