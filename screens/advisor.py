@@ -4,6 +4,7 @@ from commands.passwordcommand import Passwordcommand
 from commands.user import User
 from constants import credentials
 from constants.domaintypes import DomainTypes
+from helpers import encryption
 from helpers.consoleoutput import ConsoleOutput
 from helpers.domainvalidation import DomainValidation
 from helpers.logger import Logger
@@ -23,10 +24,12 @@ class Advisor:
 		result = self.command.get()
 		clients = result.fetchall()
 
+		crypter = encryption.Encryption()
+
 		for client in clients:
 			ConsoleOutput.success("------------------------")
 			print("User ID: " + str(client['id']))
-			print("Username: " + client['username'])
+			print("Username: " + crypter.decrypt(client['username']))
 			if client['is_admin'] == 1:
 				print("Role: system-admin")
 			else:
@@ -66,8 +69,10 @@ class Advisor:
 				ConsoleOutput.error(
 					"Password must be atleast 8 character, must have a combination of at least one lowercase letter, one uppercase letter, one digit, and one special character")
 
+		crypter = encryption.Encryption()
+		encryped_username = crypter.encrypt(username)
 		self.command.create(
-			username=username,
+			username=encryped_username,
 			password=self.passwordCommand.hash_password(password_first),
 			is_admin=is_admin
 		)
@@ -115,8 +120,10 @@ class Advisor:
 					if not username:
 						username = selected_user['username']
 
+					crypter = encryption.Encryption()
+					encrypted_username = crypter.encrypt(username)
 					data = {
-						'username': username,
+						'username': encrypted_username,
 					}
 
 					if credentials.role > 0:
@@ -158,3 +165,4 @@ class Advisor:
 		from os import urandom
 
 		return "".join(chars[c % len(chars)] for c in urandom(length))
+

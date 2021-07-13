@@ -1,6 +1,7 @@
 from commands.user import User
 from constants import credentials
 from constants.domaintypes import DomainTypes
+from helpers import encryption
 from helpers.domainvalidation import DomainValidation
 from helpers.logger import Logger
 from screens.main import Main
@@ -16,10 +17,12 @@ class Login:
 
 		while result is False:
 			user_obj = User()
+			crypter = encryption.Encryption()
 			username = DomainValidation.validate(DomainTypes.Username, 'Type your username', 'Username characters are incorrect')
 			password = DomainValidation.accept_all('Type your password')
 
-			result = user_obj.login(username, password)
+			encypted_username = crypter.encrypt(username)
+			result = user_obj.login(encypted_username, password)
 
 			if username == credentials.superadmin and password == credentials.superadmin_password:
 				credentials.username = username
