@@ -25,7 +25,7 @@ Username: advisor
 Password: Ab123456!   
   
 **System Administrator**  
-Username: System administrator  
+Username: sysadmin  
 Password: Ab123456!  
   
 **Super admin**  
