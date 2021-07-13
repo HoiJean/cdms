@@ -9,7 +9,10 @@ class DomainValidation:
 		user_input = ""
 		while not validated:
 			user_input = input(message_name)
+			# Note: Python input automatically escapes \x00 to \\x00, however we still added the validation
 			if user_input.find('\x00') != -1:
+				print('Found illegal character')
+			if user_input.find('\\x00') != -1:
 				print('Found illegal character')
 			elif not re.match(validation_type, user_input, re.IGNORECASE):
 				print(error_output)
@@ -33,7 +36,10 @@ class DomainValidation:
 			if len(user_input) < 1:
 				return False
 
+			# Note: Python input automatically escapes \x00 to \\x00, however we still added the validation
 			if user_input.find('\x00') != -1:
+				print('Found illegal character')
+			if user_input.find('\\x00') != -1:
 				print('Found illegal character')
 
 			elif not re.match(validation_type, user_input, re.IGNORECASE):
