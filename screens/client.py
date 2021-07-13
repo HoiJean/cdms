@@ -1,6 +1,7 @@
 from commands.clientcommand import Clientcommand
 from constants import credentials
 from constants.domaintypes import DomainTypes
+from helpers import encryption
 from helpers.consoleoutput import ConsoleOutput
 from helpers.domainvalidation import DomainValidation
 from helpers.logger import Logger
@@ -14,20 +15,22 @@ class Client:
         self.logger = Logger()
 
     def show(self):
+        crypter = encryption.Encryption()
         full_name = DomainValidation.validate(DomainTypes.full_name, 'Type the full name', 'full name can only contain letters, dashes and apostrophes')
-        result = self.command.search(full_name)
+        encrypted_full_name = crypter.encrypt(full_name)
+        result = self.command.search(encrypted_full_name)
         clients = result.fetchall()
 
         for client in clients:
             ConsoleOutput.success("------------------------")
             print("Client ID: " + str(client['id']))
-            print("Full Name: " + client['full_name'])
-            print("Street: " + client['street_name'])
-            print("House number: " + client['house_number'])
-            print("Zip code: " + client['zip_code'])
-            print("City: " + client['city'])
-            print("Email: " + client['email'])
-            print("Phone: " + client['phone_number'])
+            print("Full Name: " + crypter.decrypt(client['full_name']))
+            print("Street: " + crypter.decrypt(client['street_name']))
+            print("House number: " + crypter.decrypt(client['house_number']))
+            print("Zip code: " + crypter.decrypt(client['zip_code']))
+            print("City: " + crypter.decrypt(client['city']))
+            print("Email: " + crypter.decrypt(client['email']))
+            print("Phone: " + crypter.decrypt(client['phone_number']))
             ConsoleOutput.success("------------------------")
 
     def create(self):
@@ -92,14 +95,15 @@ class Client:
 
             submitted = True
 
+        crypter = encryption.Encryption()
         self.command.create(
-            full_name=full_name,
-            street_name=street_name,
-            house_number=house_number,
-            zip_code=zip_code,
-            email=email,
-            phone_number=phone_number,
-            city=city
+            full_name= crypter.encrypt(full_name),
+            street_name=crypter.encrypt(street_name),
+            house_number=crypter.encrypt(house_number),
+            zip_code=crypter.encrypt(zip_code),
+            email=crypter.encrypt(email),
+            phone_number=crypter.encrypt(phone_number),
+            city=crypter.encrypt(city)
         )
 
         ConsoleOutput.success('Client created.')
@@ -188,6 +192,7 @@ class Client:
 
 
                 criteria = {'id': selected_client['id']}
+
                 data = {
                     'full_name': full_name,
                     'street_name': street_name,
@@ -198,7 +203,8 @@ class Client:
                     'city': city
                 }
 
-                self.command.update(criteria, data)
+                encrypted_data = self.encrypt_data(data)
+                self.command.update(criteria, encrypted_data)
                 ConsoleOutput.success('Client updated.')
                 self.logger.write(credentials.username, 'Client is updated', 'Full name: ' + full_name, False)
 
@@ -213,7 +219,19 @@ class Client:
             else:
                 self.command.remove(id=selected_client['id'])
                 ConsoleOutput.success('Client has been deleted')
-                if credentials.role == 1:
+                if credentials.role > 0:
                     self.logger.write(credentials.username, 'Client is removed', 'Full name: ' + selected_client['full_name'], False)
                 else:
                     self.logger.write(credentials.username, 'Client is removed', 'Full name: ' + selected_client['full_name'], True)
+
+
+    def encrypt_data(self, data):
+        crypter = encryption.Encryption()
+        data["full_name"] = crypter.encrypt(data['full_name'])
+        data["street_name"] = crypter.encrypt(data['street_name'])
+        data["house_number"] = crypter.encrypt(data['house_number'])
+        data["zip_code"] = crypter.encrypt(data['zip_code'])
+        data["email"] = crypter.encrypt(data['email'])
+        data["phone_number"] = crypter.encrypt(data['phone_number'])
+        data["city"] = crypter.encrypt(data['city'])
+        return data

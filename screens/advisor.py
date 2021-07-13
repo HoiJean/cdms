@@ -6,6 +6,7 @@ from commands.passwordcommand import Passwordcommand
 from commands.user import User
 from constants import credentials
 from constants.domaintypes import DomainTypes
+from helpers import encryption
 from helpers.consoleoutput import ConsoleOutput
 from helpers.domainvalidation import DomainValidation
 from helpers.logger import Logger
@@ -25,10 +26,12 @@ class Advisor:
 		result = self.command.get()
 		clients = result.fetchall()
 
+		crypter = encryption.Encryption()
+
 		for client in clients:
 			ConsoleOutput.success("------------------------")
 			print("User ID: " + str(client['id']))
-			print("Username: " + client['username'])
+			print("Username: " + crypter.decrypt(client['username']))
 
 			if client['full_name'] is not None:
 				print("Fullname: " + client['full_name'])
@@ -80,16 +83,18 @@ class Advisor:
 				ConsoleOutput.error(
 					"Password must be atleast 8 character, must have a combination of at least one lowercase letter, one uppercase letter, one digit, and one special character")
 
+		crypter = encryption.Encryption()
+		encryped_username = crypter.encrypt(username)
 		self.command.create(
-			username=username,
+			username=encryped_username,
 			full_name=full_name,
 			registration_date=date.today(),
 			password=self.passwordCommand.hash_password(password_first),
 			is_admin=is_admin
 		)
 
-		if credentials.role == 1:
-			ConsoleOutput.success('Admin created!')
+		if credentials.role > 0:
+			ConsoleOutput.success('User created!')
 			self.logger.write(credentials.username, 'New advisor is created', 'Username: ' + username, False)
 		else:
 			ConsoleOutput.success('Advisor created!')
@@ -106,7 +111,7 @@ class Advisor:
 			selected_user = self.command.get(id=user_id).fetchone()
 			if selected_user is None:
 				ConsoleOutput.error("Advisor not found")
-			elif selected_user is not None and selected_user['is_admin'] == 1:
+			elif credentials.role != 2 and selected_user is not None and selected_user['is_admin']:
 				ConsoleOutput.error('User is system admin, you are not authorized to do that')
 			else:
 				data = {}
@@ -125,17 +130,19 @@ class Advisor:
 					print("Temporary password: " + raw_password)
 					print()
 				else:
-					username = DomainValidation.validateOptionalFields(DomainTypes.full_name, 'Type the username',
+					username = DomainValidation.validateOptionalFields(DomainTypes.Username, 'Type the username',
 																	   'Username can only contain letters, dashes, underscores, apostrophes, '
 																	   'periods')
 					if not username:
 						username = selected_user['username']
 
+					crypter = encryption.Encryption()
+					encrypted_username = crypter.encrypt(username)
 					data = {
-						'username': username,
+						'username': encrypted_username,
 					}
 
-					if credentials.role == 1:
+					if credentials.role > 0:
 						self.logger.write(credentials.username, 'Advisor is updated', 'Username: ' + username, False)
 					else:
 						self.logger.write(credentials.username, 'Advisor is updated', 'Username: ' + username, True)
@@ -154,7 +161,7 @@ class Advisor:
 			selected_user = self.command.get(id=user_id).fetchone()
 			if selected_user is None:
 				ConsoleOutput.error("Advisor not found")
-			elif selected_user is not None and selected_user['is_admin'] == 1:
+			elif selected_user is not None and selected_user['is_admin'] == 1 and credentials.role != 2:
 				ConsoleOutput.error('User is system admin, you are not authorized to do that')
 			else:
 				self.command.remove(id=selected_user['id'])
@@ -174,3 +181,4 @@ class Advisor:
 		from os import urandom
 
 		return "".join(chars[c % len(chars)] for c in urandom(length))
+
