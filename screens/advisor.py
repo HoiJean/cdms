@@ -72,8 +72,8 @@ class Advisor:
 			is_admin=is_admin
 		)
 
-		if credentials.role == 1:
-			ConsoleOutput.success('Admin created!')
+		if credentials.role > 0:
+			ConsoleOutput.success('User created!')
 			self.logger.write(credentials.username, 'New advisor is created', 'Username: ' + username, False)
 		else:
 			ConsoleOutput.success('Advisor created!')
@@ -90,7 +90,7 @@ class Advisor:
 			selected_user = self.command.get(id=user_id).fetchone()
 			if selected_user is None:
 				ConsoleOutput.error("Advisor not found")
-			elif selected_user is not None and selected_user['is_admin'] == 1:
+			elif credentials.role != 2 and selected_user is not None and selected_user['is_admin']:
 				ConsoleOutput.error('User is system admin, you are not authorized to do that')
 			else:
 				data = {}
@@ -109,7 +109,7 @@ class Advisor:
 					print("Temporary password: " + raw_password)
 					print()
 				else:
-					username = DomainValidation.validateOptionalFields(DomainTypes.full_name, 'Type the username',
+					username = DomainValidation.validateOptionalFields(DomainTypes.Username, 'Type the username',
 																	   'Username can only contain letters, dashes, underscores, apostrophes, '
 																	   'periods')
 					if not username:
@@ -119,7 +119,7 @@ class Advisor:
 						'username': username,
 					}
 
-					if credentials.role == 1:
+					if credentials.role > 0:
 						self.logger.write(credentials.username, 'Advisor is updated', 'Username: ' + username, False)
 					else:
 						self.logger.write(credentials.username, 'Advisor is updated', 'Username: ' + username, True)
@@ -138,7 +138,7 @@ class Advisor:
 			selected_user = self.command.get(id=user_id).fetchone()
 			if selected_user is None:
 				ConsoleOutput.error("Advisor not found")
-			elif selected_user is not None and selected_user['is_admin'] == 1:
+			elif selected_user is not None and selected_user['is_admin'] == 1 and credentials.role != 2:
 				ConsoleOutput.error('User is system admin, you are not authorized to do that')
 			else:
 				self.command.remove(id=selected_user['id'])

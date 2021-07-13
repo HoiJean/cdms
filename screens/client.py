@@ -213,7 +213,7 @@ class Client:
             else:
                 self.command.remove(id=selected_client['id'])
                 ConsoleOutput.success('Client has been deleted')
-                if credentials.role == 1:
+                if credentials.role > 0:
                     self.logger.write(credentials.username, 'Client is removed', 'Full name: ' + selected_client['full_name'], False)
                 else:
                     self.logger.write(credentials.username, 'Client is removed', 'Full name: ' + selected_client['full_name'], True)

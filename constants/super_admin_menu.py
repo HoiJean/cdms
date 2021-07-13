@@ -9,55 +9,51 @@ from screens.update_login_screen import UpdateLoginScreen
 
 super_admin_menu = {
 	1: {
-		"label": "Modify password",
-		"func": UpdateLoginScreen().show
-	},
-	2: {
 		"label": "List of users",
 		"func": Advisor().show
 	},
-	3: {
+	2: {
 		"label": "Add advisor",
 		"func": Advisor().create
 	},
-	4: {
-		"label": "Modify advisor",
+	3: {
+		"label": "Modify advisor or admin",
 		"func": Advisor().update
 	},
-	5: {
-		"label": "Delete advisor",
+	4: {
+		"label": "Delete advisor or admin",
 		"func": Advisor().delete
 	},
-	6: {
-		"label": "Reset advisor password",
+	5: {
+		"label": "Reset advisor or admin password",
 		"func": Advisor().update_password
 	},
-	7: {
-		"label": "Make system backup",
-		"func": BackupScreen().show
-	},
-	8: {
-		"label": "System logs",
-		"func": LogScreen().show
-	},
-	9: {
+	6: {
 		"label": "Add client",
 		"func": Client().create
 	},
-	10: {
+	7: {
 		"label": "Modify client",
 		"func": Client().update
 	},
-	11: {
+	8: {
 		"label": "Remove client",
 		"func": Client.delete
 	},
-	12: {
+	9: {
 		"label": "Search client",
 		"func": Client().show
 	},
-	13: {
+	10: {
 		"label": "Add a new Admin",
 		"func": Advisor().create_admin
+	},
+	11: {
+		"label": "Make system backup",
+		"func": BackupScreen().show
+	},
+	12: {
+		"label": "System logs",
+		"func": LogScreen().show
 	},
 }
