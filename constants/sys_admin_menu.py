@@ -2,7 +2,6 @@ from screens.advisor import Advisor
 from screens.backup_screen import BackupScreen
 from screens.client import Client
 from screens.log_screen import LogScreen
-from screens.temp import Temp
 from screens.update_login_screen import UpdateLoginScreen
 
 sys_admin_menu = {

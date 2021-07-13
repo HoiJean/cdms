@@ -2,7 +2,7 @@ import sqlite3
 import os
 
 # DEFAULT_PATH = os.path.join(os.path.dirname(__file__), '../database.sqlite3')
-DEFAULT_PATH = os.path.join(os.path.dirname(__file__), '../temp/database.db')
+DEFAULT_PATH = os.path.join(os.path.dirname(__file__), '../database.db')
 
 
 class DatabaseManager:

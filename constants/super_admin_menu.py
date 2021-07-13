@@ -2,8 +2,6 @@ from screens.advisor import Advisor
 from screens.backup_screen import BackupScreen
 from screens.client import Client
 from screens.log_screen import LogScreen
-from screens.temp import Temp
-from screens.update_login_screen import UpdateLoginScreen
 
 # SUPER ADMIN MENU
 
@@ -38,7 +36,7 @@ super_admin_menu = {
 	},
 	8: {
 		"label": "Remove client",
-		"func": Client.delete
+		"func": Client().delete
 	},
 	9: {
 		"label": "Search client",

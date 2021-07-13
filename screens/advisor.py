@@ -1,7 +1,6 @@
 from datetime import date
 
 from commands.advisorcommand import Advisorcommand
-from commands.clientcommand import Clientcommand
 from commands.passwordcommand import Passwordcommand
 from commands.user import User
 from constants import credentials
@@ -11,9 +10,6 @@ from helpers.consoleoutput import ConsoleOutput
 from helpers.domainvalidation import DomainValidation
 from helpers.logger import Logger
 from helpers.typevalidation import TypeValidation
-from screens import update_login_screen
-from screens.update_login_screen import UpdateLoginScreen
-
 
 class Advisor:
 
@@ -174,7 +170,7 @@ class Advisor:
             else:
                 self.command.remove(id=selected_user['id'])
                 ConsoleOutput.success('Advisor has been deleted')
-                if credentials.role == 1:
+                if credentials.role > 0:
                     self.logger.write(credentials.username, 'Advisor is removed',
                                       'Username: ' + selected_user['username'], False)
                 else:
