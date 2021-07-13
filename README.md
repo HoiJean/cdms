@@ -1,8 +1,14 @@
 # Client Data Management System
 A complex system to manage clients information using python via command line with worlds most secure techniques used in WW2.
 
+**By: Jean Rukundo (0902403) & Kevin Kroos (0892112)**
+
+# System requirements
+- Mac/Windows/Linux
+- Python 3.8+
+
 # Guide
-Every user has it's own role defined by is_admin in the database. For every role another menu array is being loaded. You can login with the credentials discussed in the section login information.  
+Every user has it's own role defined by **is_admin** in the database. For every role a different menu array is being loaded. You can login with the credentials discussed in the section login information.  
 When the user login an menu will show up. The menu shows an number with an item. For example: '1. Create user'. The user can type the ID into the terminal and the menu will open.  
   
   
@@ -40,3 +46,7 @@ Password: Admin!23
 - Reset (temporarily) passwords
 - View logs
 - Make system backups
+
+
+#### Disclaimer
+Our encryption does not encrypt numbers only letters.
