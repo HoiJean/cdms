@@ -34,7 +34,7 @@ class Advisor:
 			print("Username: " + crypter.decrypt(client['username']))
 
 			if client['full_name'] is not None:
-				print("Fullname: " + client['full_name'])
+				print("Fullname: " + crypter.decrypt(client['full_name']))
 
 			if client['registration_date'] is not None:
 				print("Registration: " + client['registration_date'])
@@ -85,9 +85,10 @@ class Advisor:
 
 		crypter = encryption.Encryption()
 		encryped_username = crypter.encrypt(username)
+		encryped_full_name = crypter.encrypt(full_name)
 		self.command.create(
 			username=encryped_username,
-			full_name=full_name,
+			full_name=encryped_full_name,
 			registration_date=date.today(),
 			password=self.passwordCommand.hash_password(password_first),
 			is_admin=is_admin
@@ -133,13 +134,18 @@ class Advisor:
 					username = DomainValidation.validateOptionalFields(DomainTypes.Username, 'Type the username',
 																	   'Username can only contain letters, dashes, underscores, apostrophes, '
 																	   'periods')
+					full_name = DomainValidation.validate(DomainTypes.full_name, 'Type the full name',
+														  'full name can only contain letters, dashes and apostrophes',
+														  min_length=5, max_length=20)
 					if not username:
 						username = selected_user['username']
 
 					crypter = encryption.Encryption()
 					encrypted_username = crypter.encrypt(username)
+					encryped_full_name = crypter.encrypt(full_name)
 					data = {
 						'username': encrypted_username,
+						'full_name': encryped_full_name,
 					}
 
 					if credentials.role > 0:
