@@ -34,7 +34,7 @@ Password: Ab123456!
 Username: sysadmin  
 Password: Ab123456!  
   
-**Super admin**  
+**Super admin [ Hardcoded ]**  
 Username: superadmin  
 Password: Admin!23  
   
