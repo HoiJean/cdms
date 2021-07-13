@@ -113,6 +113,7 @@ class Client:
 
     def update(self):
 
+        crypter = encryption.Encryption()
         client_id = input('Which client ID do you want to edit?')
         if not TypeValidation.is_digit(client_id):
             ConsoleOutput.error('Please use a number')
@@ -176,19 +177,19 @@ class Client:
                             city_validated = True
 
                 if not full_name:
-                    full_name = selected_client['full_name']
+                    full_name = crypter.decrypt(selected_client['full_name'])
                 if not street_name:
-                    street_name = selected_client['street_name']
+                    street_name = crypter.decrypt(selected_client['street_name'])
                 if not house_number:
-                    house_number = selected_client['house_number']
+                    house_number = crypter.decrypt(selected_client['house_number'])
                 if not zip_code:
-                    zip_code = selected_client['zip_code']
+                    zip_code = crypter.decrypt(selected_client['zip_code'])
                 if not email:
-                    email = selected_client['email']
+                    email = crypter.decrypt(selected_client['email'])
                 if not phone_number:
-                    phone_number = selected_client['phone_number']
+                    phone_number = crypter.decrypt(selected_client['phone_number'])
                 if not city:
-                    city = selected_client['city']
+                    city = crypter.decrypt(selected_client['city'])
 
 
                 criteria = {'id': selected_client['id']}

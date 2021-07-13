@@ -140,6 +140,8 @@ class Advisor:
                                                           min_length=5, max_length=20)
                     if not username:
                         username = crypter.decrypt(selected_user['username'])
+                    if not full_name:
+                        full_name = crypter.decrypt(selected_user['full_name'])
 
                     encrypted_username = crypter.encrypt(username)
                     encryped_full_name = crypter.encrypt(full_name)
