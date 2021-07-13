@@ -159,6 +159,7 @@ class Advisor:
 
     def delete(self):
         user_id = input('Which user ID do you want to delete?')
+        crypter = encryption.Encryption()
         if not TypeValidation.is_digit(user_id):
             ConsoleOutput.error('Please use a number')
         else:
@@ -170,12 +171,13 @@ class Advisor:
             else:
                 self.command.remove(id=selected_user['id'])
                 ConsoleOutput.success('Advisor has been deleted')
+                username = crypter.decrypt(selected_user['username'])
                 if credentials.role > 0:
                     self.logger.write(credentials.username, 'Advisor is removed',
-                                      'Username: ' + selected_user['username'], False)
+                                      'Username: ' + username, False)
                 else:
                     self.logger.write(credentials.username, 'New advisor is removed',
-                                      'Username: ' + selected_user['username'], True)
+                                      'Username: ' + username, True)
 
     def generate_password(self, length):
         if not isinstance(length, int) or length < 8:
