@@ -9,8 +9,12 @@ class DomainValidation:
 		user_input = ""
 		while not validated:
 			user_input = input(message_name)
-
-			if not re.match(validation_type, user_input, re.IGNORECASE):
+			# Note: Python input automatically escapes \x00 to \\x00, however we still added the validation
+			if user_input.find('\x00') != -1:
+				print('Found illegal character')
+			if user_input.find('\\x00') != -1:
+				print('Found illegal character')
+			elif not re.match(validation_type, user_input, re.IGNORECASE):
 				print(error_output)
 			else:
 				if len(user_input) < min_length:
@@ -24,7 +28,7 @@ class DomainValidation:
 	@staticmethod
 	def validateOptionalFields(validation_type, message_name, error_output, min_length=3, max_length=100):
 		validated = False
-
+		user_input = ''
 		while not validated:
 
 			user_input = input(message_name)
@@ -32,7 +36,13 @@ class DomainValidation:
 			if len(user_input) < 1:
 				return False
 
-			if not re.match(validation_type, user_input, re.IGNORECASE):
+			# Note: Python input automatically escapes \x00 to \\x00, however we still added the validation
+			if user_input.find('\x00') != -1:
+				print('Found illegal character')
+			if user_input.find('\\x00') != -1:
+				print('Found illegal character')
+
+			elif not re.match(validation_type, user_input, re.IGNORECASE):
 				print(error_output)
 			else:
 				if len(user_input) < min_length:

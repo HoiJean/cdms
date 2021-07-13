@@ -1,3 +1,5 @@
+from datetime import date
+
 from commands.advisorcommand import Advisorcommand
 from commands.clientcommand import Clientcommand
 from commands.passwordcommand import Passwordcommand
@@ -30,6 +32,13 @@ class Advisor:
 			ConsoleOutput.success("------------------------")
 			print("User ID: " + str(client['id']))
 			print("Username: " + crypter.decrypt(client['username']))
+
+			if client['full_name'] is not None:
+				print("Fullname: " + client['full_name'])
+
+			if client['registration_date'] is not None:
+				print("Registration: " + client['registration_date'])
+
 			if client['is_admin'] == 1:
 				print("Role: system-admin")
 			else:
@@ -39,6 +48,7 @@ class Advisor:
 	def create(self, is_admin=0):
 
 		username_validated = False
+		username = ''
 		while not username_validated:
 
 			username = DomainValidation.validate(DomainTypes.Username, 'Type the username',
@@ -53,12 +63,16 @@ class Advisor:
 			else:
 				username_validated = True
 
+		full_name = DomainValidation.validate(DomainTypes.full_name, 'Type the full name',
+											'full name can only contain letters, dashes and apostrophes',
+											 min_length=5, max_length=20)
+
 		valid_password = False
 		password_first = ''
 
 		while not valid_password:
-			password_first = DomainValidation.accept_all('Type the password')
-			password_second = DomainValidation.accept_all('Confirm the password')
+			password_first = DomainValidation.validate(DomainTypes.password, 'Type your password', 'Password characters invalid')
+			password_second = DomainValidation.validate(DomainTypes.password, 'Type your password', 'Password characters invalid')
 			password_check = TypeValidation.is_strong_password(password_first)
 
 			if password_first != password_second:
@@ -73,6 +87,8 @@ class Advisor:
 		encryped_username = crypter.encrypt(username)
 		self.command.create(
 			username=encryped_username,
+			full_name=full_name,
+			registration_date=date.today(),
 			password=self.passwordCommand.hash_password(password_first),
 			is_admin=is_admin
 		)

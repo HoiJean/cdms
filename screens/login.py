@@ -19,7 +19,7 @@ class Login:
 			user_obj = User()
 			crypter = encryption.Encryption()
 			username = DomainValidation.validate(DomainTypes.Username, 'Type your username', 'Username characters are incorrect')
-			password = DomainValidation.accept_all('Type your password')
+			password = DomainValidation.validate(DomainTypes.password, 'Type your password', 'Password characters invalid')
 
 			encypted_username = crypter.encrypt(username)
 			result = user_obj.login(encypted_username, password)
