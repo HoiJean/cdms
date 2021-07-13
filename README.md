@@ -15,7 +15,7 @@ Allthough an command must be finished, with edit operations all the fields are o
   
 The system can create logs, they will be encrypted and can only being viewed inside the application itself. The logs will be in log.csv file in the root directory of the application. If an system administrator created an backup a zipfile will also occur in the root directy with a prefix name 'backup' and a timestamp after.  
   
-If an input is invalid the system will ask to enter the correct one untill the input is successfull.  
+If an input is invalid the system will ask to enter the correct one untill the input is successfull. Inputs has also a default minimum requirement of 3 characters and a maximum of 100 characters unless differently specified.  
 
 
 # Login information
