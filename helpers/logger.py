@@ -69,14 +69,20 @@ class Logger:
 
 
     def open(self):
-        self.file = open(self.filename, mode='r+')
-        self.reader = csv.DictReader(self.file)
-        self.writer = csv.DictWriter(self.file, fieldnames=self.fieldnames)
+        try:
+            self.file = open(self.filename, mode='r+')
+            self.reader = csv.DictReader(self.file)
+            self.writer = csv.DictWriter(self.file, fieldnames=self.fieldnames)
+        except Exception as e:
+            print('Log file corrupted, error opening file')
 
     def close(self):
-        self.file.close()
-        self.reader = None
-        self.writer = None
+        try:
+            self.file.close()
+            self.reader = None
+            self.writer = None
+        except Exception as e:
+            print('Log file corrupted, error closing file')
 
     def count_size(self):
         length = 0
@@ -84,5 +90,5 @@ class Logger:
             length = len(list(self.reader))
             return length
         except Exception as e:
-            print('Log file corrupted, error counting file')
+            print('Log file corrupted, error counting file file')
 
