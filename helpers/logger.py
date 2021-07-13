@@ -34,34 +34,39 @@ class Logger:
             file.close()
 
     def write(self, username, description, additional_information, suspicious=False):
-        self.open()
+        try:
+            self.open()
 
-        current_date = datetime.now()
+            current_date = datetime.now()
 
-        if suspicious is True:
-            suspicious = 'Yes'
-        else:
-            suspicious = 'No'
+            if suspicious is True:
+                suspicious = 'Yes'
+            else:
+                suspicious = 'No'
 
-        self.writer.writerow(
-            {
-                self.encryption.encrypt('No'): self.count_size(),
-                self.encryption.encrypt('Username'): self.encryption.encrypt(username),
-                self.encryption.encrypt('Date'): current_date.strftime("%d-%m-%Y"),
-                self.encryption.encrypt('Time'): datetime.now().strftime("%H:%M:%S"),
-                self.encryption.encrypt('Description of activity'): self.encryption.encrypt(description),
-                self.encryption.encrypt('Additional Information'): self.encryption.encrypt(additional_information),
-                self.encryption.encrypt('Suspicious'): self.encryption.encrypt(suspicious),
-            })
-
-        self.close()
+            self.writer.writerow(
+                {
+                    self.encryption.encrypt('No'): self.count_size(),
+                    self.encryption.encrypt('Username'): self.encryption.encrypt(username),
+                    self.encryption.encrypt('Date'): current_date.strftime("%d-%m-%Y"),
+                    self.encryption.encrypt('Time'): datetime.now().strftime("%H:%M:%S"),
+                    self.encryption.encrypt('Description of activity'): self.encryption.encrypt(description),
+                    self.encryption.encrypt('Additional Information'): self.encryption.encrypt(additional_information),
+                    self.encryption.encrypt('Suspicious'): self.encryption.encrypt(suspicious),
+                })
+            self.close()
+        except Exception as e:
+            print('Log file corrupted, error writing file')
 
     def read(self):
-        self.open()
-        data = list(self.reader)
-        self.close()
+        try:
+            self.open()
+            data = list(self.reader)
+            self.close()
+            return data
+        except Exception as e:
+            print('Log file corrupted, error reading file')
 
-        return data
 
     def open(self):
         self.file = open(self.filename, mode='r+')
@@ -77,7 +82,7 @@ class Logger:
         length = 0
         try:
             length = len(list(self.reader))
-        except:
-            print('error occurred fetching logging file')
+            return length
+        except Exception as e:
+            print('Log file corrupted, error counting file')
 
-        return length
