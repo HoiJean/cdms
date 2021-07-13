@@ -219,11 +219,13 @@ class Client:
                 ConsoleOutput.error("Client not found")
             else:
                 self.command.remove(id=selected_client['id'])
+                crypter = encryption.Encryption()
+                full_name = crypter.decrypt(selected_client['full_name'])
                 ConsoleOutput.success('Client has been deleted')
                 if credentials.role > 0:
-                    self.logger.write(credentials.username, 'Client is removed', 'Full name: ' + selected_client['full_name'], False)
+                    self.logger.write(credentials.username, 'Client is removed', 'Full name: ' + full_name, False)
                 else:
-                    self.logger.write(credentials.username, 'Client is removed', 'Full name: ' + selected_client['full_name'], True)
+                    self.logger.write(credentials.username, 'Client is removed', 'Full name: ' + full_name, True)
 
 
     def encrypt_data(self, data):
