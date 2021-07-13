@@ -33,7 +33,7 @@ class Login:
 					log.write(username, 'Login failed', f'Username { username} is used with password { password}', True)
 					print('Please check your credentials')
 				else:
-					credentials.username = result["username"]
+					credentials.username = crypter.decrypt(result["username"])
 					credentials.role = result["is_admin"]
 					log.write(username, 'Logged in', '', False)
 
