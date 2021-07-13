@@ -1,6 +1,7 @@
 class DomainTypes:
     # User types
     Username = "^[a-zA-Z][a-zA-Z0-9.'-_]+$"
+    password = "^[><?@+'`~^%&\*\[\]\{\}.!#|\\\"$';,:;=/\(\),\-\w\s+]+$"
 
     # Client types
     full_name = "^[a-z '-]+$"

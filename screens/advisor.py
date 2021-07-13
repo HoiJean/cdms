@@ -54,8 +54,8 @@ class Advisor:
 		password_first = ''
 
 		while not valid_password:
-			password_first = DomainValidation.accept_all('Type the password')
-			password_second = DomainValidation.accept_all('Confirm the password')
+			password_first = DomainValidation.validate(DomainTypes.password, 'Type your password', 'Password characters invalid')
+			password_second = DomainValidation.validate(DomainTypes.password, 'Type your password', 'Password characters invalid')
 			password_check = TypeValidation.is_strong_password(password_first)
 
 			if password_first != password_second:
